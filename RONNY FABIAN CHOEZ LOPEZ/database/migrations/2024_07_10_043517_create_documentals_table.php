@@ -20,6 +20,9 @@ return new class extends Migration
             $table->integer('duracion')->nullable();  // duración en minutos
             $table->text('resumen')->nullable();
             $table->timestamps();
+
+            $table->foreign('id_genero')->references('id_genero')->on('genero_docu');
+            $table->foreign('id_director')->references('id_director')->on('directors');
         });
     }
 
