@@ -4,8 +4,8 @@ from api import views
 
 routers = routers.DefaultRouter()
 routers.register(r'pelicula', views.PeliculaViewSet)
-routers.register(r'genero', views.GeneroViewSet)
-routers.register(r'actores', views.ActoresViewSet)
+routers.register(r'genero', views.GeneroPeliculaViewSet)
+routers.register(r'actor', views.ActorPeliculaViewSet)
 
 urlpatterns = [
     path('', include(routers.urls)),
