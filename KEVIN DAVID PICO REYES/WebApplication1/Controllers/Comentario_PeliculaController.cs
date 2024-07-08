@@ -1,93 +1,95 @@
-using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Models;
-using WebApplication1.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
+using WebApplication1.Data;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class ComentariosPeliculaController : ControllerBase
+    [Route("api/[controller]")]
+    public class ComentarioPeliculaController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public ComentariosPeliculaController(ApplicationDbContext context)
+        public ComentarioPeliculaController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public IActionResult GetComentariosPelicula()
+        public async Task<IActionResult> Get()
         {
-            var comentarios = _context.ComentariosPelicula
-                .Include(c => c.Usuario)
-                .Include(c => c.Pelicula)
-                .ToList();
-            
+            var comentarios = await _context.ComentariosPeliculas.ToListAsync();
             return Ok(comentarios);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetComentarioPelicula(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var comentario = _context.ComentariosPelicula
-                .Include(c => c.Usuario)
-                .Include(c => c.Pelicula)
-                .FirstOrDefault(c => c.Id == id);
-
+            var comentario = await _context.ComentariosPeliculas.FindAsync(id);
             if (comentario == null)
             {
                 return NotFound();
             }
-            
             return Ok(comentario);
         }
 
         [HttpPost]
-        public IActionResult PostComentarioPelicula([FromBody] ComentarioPelicula comentario)
+        public async Task<IActionResult> Post([FromBody] ComentarioPelicula comentario)
         {
             if (ModelState.IsValid)
             {
-                _context.ComentariosPelicula.Add(comentario);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(GetComentarioPelicula), new { id = comentario.Id }, comentario);
+                _context.ComentariosPeliculas.Add(comentario);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(Get), new { id = comentario.Id }, comentario);
             }
-            
             return BadRequest(ModelState);
         }
 
         [HttpPut("{id}")]
-        public IActionResult PutComentarioPelicula(int id, [FromBody] ComentarioPelicula comentario)
+        public async Task<IActionResult> Put(int id, [FromBody] ComentarioPelicula comentario)
         {
             if (id != comentario.Id)
             {
                 return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            _context.Entry(comentario).State = EntityState.Modified;
+
+            try
             {
-                _context.Entry(comentario).State = EntityState.Modified;
-                _context.SaveChanges();
-                return NoContent();
+                await _context.SaveChangesAsync();
             }
-            
-            return BadRequest(ModelState);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.ComentariosPeliculas.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteComentarioPelicula(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var comentario = _context.ComentariosPelicula.Find(id);
+            var comentario = await _context.ComentariosPeliculas.FindAsync(id);
             if (comentario == null)
             {
                 return NotFound();
             }
 
-            _context.ComentariosPelicula.Remove(comentario);
-            _context.SaveChanges();
+            _context.ComentariosPeliculas.Remove(comentario);
+            await _context.SaveChangesAsync();
+
             return NoContent();
         }
     }
