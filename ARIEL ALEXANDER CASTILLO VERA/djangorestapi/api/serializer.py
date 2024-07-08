@@ -6,12 +6,12 @@ class PeliculaSerializer(serializers.ModelSerializer):
         model = Pelicula
         fields = '__all__'
 
-class generoSerializer(serializers.ModelSerializer):
+class GeneroSerializer(serializers.ModelSerializer):
     class Meta:
-        model = genero
+        model = Genero
         fields = '__all__'
 
-class ActoresSerializer(serializers.ModelSerializer):
+class ActorSerializer(serializers.ModelSerializer):
     class Meta:
-        model = actores
+        model = Actor
         fields = '__all__'
