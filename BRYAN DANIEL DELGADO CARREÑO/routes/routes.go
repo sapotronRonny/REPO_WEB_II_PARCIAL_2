@@ -15,9 +15,16 @@ func SetupRoutes(app *fiber.App) {
 	app.Delete("/serie/:id", handlers.DeleteSerie)
 
 	// Rutas para Actor
-	app.Get("/actor", handlers.GetActores)
-	app.Get("/actor/:id", handlers.GetActorID)
-	app.Post("/actor", handlers.CreateActor)
-	app.Put("/actor/:id", handlers.UpdateActor)
-	app.Delete("/actor/:id", handlers.DeleteActor)
+	app.Get("/actor", handlers.GetActorSerie)
+	app.Get("/actor/:id", handlers.GetActorSerie)
+	app.Post("/actor", handlers.CreateActorSerie)
+	app.Put("/actor/:id", handlers.UpdateActorSerie)
+	app.Delete("/actor/:id", handlers.DeleteActorSerie)
+
+	// Rutas para Genero
+	app.Get("/genero", handlers.GetGeneroSeries)
+	app.Get("/genero/:id", handlers.GetGeneroSerieID)
+	app.Post("/genero", handlers.CreateGeneroSerie)
+	app.Put("/genero/:id", handlers.UpdateGeneroSerie)
+	app.Delete("/genero/:id", handlers.DeleteGeneroSerie)
 }
