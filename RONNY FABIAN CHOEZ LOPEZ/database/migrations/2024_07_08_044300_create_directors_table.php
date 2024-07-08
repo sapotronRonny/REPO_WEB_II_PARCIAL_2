@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('directors', function (Blueprint $table) {
-            $table->id();
+            $table->id('director_id');
+            $table->string('nombre', 100);
+            $table->string('pais_origen', 100)->nullable();
+            $table->date('fecha_nacimiento')->nullable();
             $table->timestamps();
         });
     }
