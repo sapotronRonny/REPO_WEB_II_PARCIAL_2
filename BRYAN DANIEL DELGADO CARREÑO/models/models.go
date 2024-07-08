@@ -14,13 +14,17 @@ func InitDB(db *gorm.DB) {
 }
 
 type Serie struct {
-	gorm.Model
-	ID            uint `gorm:"primaryKey"`
-	ActoresID     uint
-	Actor         Actores       `gorm:"foreignKey:ActoresID"` // Agrega esta línea para la relación
-	Titulo        string        `gorm:"type:varchar(100)"`
-	FechaCreacion time.Time     `gorm:"type:date"`
-	Duracion      time.Duration `gorm:"type:time"`
+	ID_Serie         uint `gorm:"primaryKey"`
+	CreatedAt        time.Time
+	UpdatedAt        time.Time
+	DeletedAt        gorm.DeletedAt `gorm:"index"`
+	ActoresID        uint
+	Actor            ActorSerie `gorm:"foreignKey:ActoresID;references:ID_Actor"`
+	GeneroID         uint
+	Genero           GeneroSerie `gorm:"foreignKey:GeneroID;references:ID_GeneroSerie"`
+	Titulo           string      `gorm:"type:varchar(100)"`
+	FechaCreacion    time.Time   `gorm:"type:date"`
+	DuracionSegundos int64       // Guardar la duración en segundos
 }
 
 // Definir los estados permitidos
@@ -32,10 +36,21 @@ const (
 	Muerto   Estado = "Muerto"
 )
 
-// Estructura Actores
-type Actores struct {
-	gorm.Model
-	Nombre             string    `gorm:"type:varchar(255)"`
-	FechaInicioCarrera time.Time `gorm:"type:date"`
-	Estado             Estado    `gorm:"type:varchar(20)"` // Usa el tipo Estado y define el tipo de columna en la base de datos
+// Estructura Actor
+type ActorSerie struct {
+	ID_Actor           uint `gorm:"primaryKey;unique"`
+	CreatedAt          time.Time
+	UpdatedAt          time.Time
+	DeletedAt          gorm.DeletedAt `gorm:"index"`
+	Nombre             string         `gorm:"type:varchar(255)"`
+	FechaInicioCarrera time.Time      `gorm:"type:date"`
+	Estado             Estado         `gorm:"type:varchar(20)"`
+}
+
+type GeneroSerie struct {
+	ID_GeneroSerie uint `gorm:"primaryKey;unique"`
+	CreatedAt      time.Time
+	UpdatedAt      time.Time
+	DeletedAt      gorm.DeletedAt `gorm:"index"`
+	NombreGenero   string         `gorm:"type:varchar(255)"`
 }

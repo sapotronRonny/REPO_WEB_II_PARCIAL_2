@@ -7,21 +7,21 @@ import (
 
 // Controladores para Actor
 
-func GetActores(c *fiber.Ctx) error {
-	var actores []models.Actores
+func GetActorSerie(c *fiber.Ctx) error {
+	var actores []models.ActorSerie
 	models.DB.Find(&actores)
 	return c.JSON(actores)
 }
 
-func GetActorID(c *fiber.Ctx) error {
+func GetActorSerieID(c *fiber.Ctx) error {
 	id := c.Params("id")
-	var actores models.Actores
+	var actores models.ActorSerie
 	models.DB.First(&actores, id)
 	return c.JSON(actores)
 }
 
-func CreateActor(c *fiber.Ctx) error {
-	var actores models.Actores
+func CreateActorSerie(c *fiber.Ctx) error {
+	var actores models.ActorSerie
 	if err := c.BodyParser(&actores); err != nil {
 		return err
 	}
@@ -29,9 +29,9 @@ func CreateActor(c *fiber.Ctx) error {
 	return c.JSON(actores)
 }
 
-func UpdateActor(c *fiber.Ctx) error {
+func UpdateActorSerie(c *fiber.Ctx) error {
 	id := c.Params("id")
-	var actores models.Actores
+	var actores models.ActorSerie
 	models.DB.First(&actores, id)
 	if err := c.BodyParser(&actores); err != nil {
 		return err
@@ -40,9 +40,9 @@ func UpdateActor(c *fiber.Ctx) error {
 	return c.JSON(actores)
 }
 
-func DeleteActor(c *fiber.Ctx) error {
+func DeleteActorSerie(c *fiber.Ctx) error {
 	id := c.Params("id")
-	var actores models.Actores
+	var actores models.ActorSerie
 	models.DB.Delete(&actores, id)
 	return nil
 }
