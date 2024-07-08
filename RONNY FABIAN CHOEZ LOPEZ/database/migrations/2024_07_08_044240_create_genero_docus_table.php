@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('genero', function (Blueprint $table) {
-            $table->bigIncrements('id_series');
+        Schema::create('genero_docus', function (Blueprint $table) {
+            $table->id('genero_id');
+            $table->string('nombre', 50);
             $table->timestamps();
-            $table->string('nombre',100);
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('genero');
+        Schema::dropIfExists('genero_docus');
     }
 };
