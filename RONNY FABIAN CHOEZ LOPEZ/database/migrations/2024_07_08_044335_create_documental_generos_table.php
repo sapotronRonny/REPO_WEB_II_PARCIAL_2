@@ -12,8 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('documental_generos', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('documental_id');
+            $table->unsignedBigInteger('generodocu_id');
             $table->timestamps();
+
+            $table->primary(['documental_id', 'generodocu_id']);
+            $table->foreign('documental_id')->references('documental_id')->on('documentales')->onDelete('cascade');
+            $table->foreign('generodocu_id')->references('generdocuo_id')->on('generos')->onDelete('cascade');
         });
     }
 
