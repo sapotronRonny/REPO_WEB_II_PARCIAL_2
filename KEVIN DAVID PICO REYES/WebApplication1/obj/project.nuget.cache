@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AQ/1eWGtPhU=",
+  "dgSpecHash": "hAZKDxnaj4c=",
   "success": true,
-  "projectFilePath": "C:\\Users\\kevin\\OneDrive\\Escritorio\\WebApplication1\\WebApplication1.csproj",
+  "projectFilePath": "C:\\Users\\kevin\\OneDrive\\Escritorio\\repositorio\\REPO_WEB_II_PARCIAL_2\\KEVIN DAVID PICO REYES\\WebApplication1\\WebApplication1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kevin\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\kevin\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
