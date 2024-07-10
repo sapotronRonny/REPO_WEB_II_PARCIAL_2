@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('directors', function (Blueprint $table) {
-            $table->id('director_id');
-            $table->string('nombre', 100);
-            $table->string('pais_origen', 100)->nullable();
-            $table->date('fecha_nacimiento')->nullable();
+        Schema::create('genero_docu', function (Blueprint $table) {
+            $table->id('id_genero');
+            $table->string('nombre', 50);
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('directors');
+        Schema::dropIfExists('genero_docus');
     }
 };

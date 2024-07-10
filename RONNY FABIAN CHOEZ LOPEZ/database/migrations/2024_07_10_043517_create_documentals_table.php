@@ -12,15 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('documentals', function (Blueprint $table) {
-            $table->id('documental_id');
-            $table->string('titulo', 255);
-            $table->date('fecha_estreno')->nullable();
-            $table->unsignedBigInteger('director_id')->nullable();
-            $table->integer('duracion')->nullable();
-            $table->text('descripcion')->nullable();
+            $table->id('id_documental');
+            $table->string('titulo', 100);
+            $table->foreignId('id_genero')->constrained('genero_docu');
+            $table->foreignId('id_director')->constrained('directors');
+            $table->date('fecha_lanzamiento')->nullable();
+            $table->integer('duracion')->nullable();  // duración en minutos
+            $table->text('resumen')->nullable();
             $table->timestamps();
-
-            $table->foreign('director_id')->references('director_id')->on('directores')->onDelete('set null');
         });
     }
 
