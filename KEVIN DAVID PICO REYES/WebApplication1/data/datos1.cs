@@ -11,8 +11,8 @@ namespace WebApplication1.Data
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<ComentarioPelicula> ComentariosPelicula { get; set; }
-        public DbSet<ComentarioSerie> ComentariosSerie { get; set; }
+        public DbSet<ComentarioPelicula> ComentariosPeliculas { get; set; }
+        public DbSet<ComentarioSerie> ComentariosSeries { get; set; }
 
         // Otros DbSet para otras entidades si las tienes
         public DbSet<Pelicula> Peliculas { get; set; }

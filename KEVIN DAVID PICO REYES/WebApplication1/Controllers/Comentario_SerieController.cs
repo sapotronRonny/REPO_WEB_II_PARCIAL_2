@@ -1,93 +1,95 @@
-using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Models;
-using WebApplication1.Data;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
+using WebApplication1.Data;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
-    public class ComentariosSerieController : ControllerBase
+    [Route("api/[controller]")]
+    public class ComentarioSerieController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public ComentariosSerieController(ApplicationDbContext context)
+        public ComentarioSerieController(ApplicationDbContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public IActionResult GetComentariosSerie()
+        public async Task<IActionResult> Get()
         {
-            var comentarios = _context.ComentariosSerie
-                .Include(c => c.Usuario)
-                .Include(c => c.Serie)
-                .ToList();
-            
+            var comentarios = await _context.ComentariosSeries.ToListAsync();
             return Ok(comentarios);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetComentarioSerie(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var comentario = _context.ComentariosSerie
-                .Include(c => c.Usuario)
-                .Include(c => c.Serie)
-                .FirstOrDefault(c => c.Id == id);
-
+            var comentario = await _context.ComentariosSeries.FindAsync(id);
             if (comentario == null)
             {
                 return NotFound();
             }
-            
             return Ok(comentario);
         }
 
         [HttpPost]
-        public IActionResult PostComentarioSerie([FromBody] ComentarioSerie comentario)
+        public async Task<IActionResult> Post([FromBody] ComentarioSerie comentario)
         {
             if (ModelState.IsValid)
             {
-                _context.ComentariosSerie.Add(comentario);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(GetComentarioSerie), new { id = comentario.Id }, comentario);
+                _context.ComentariosSeries.Add(comentario);
+                await _context.SaveChangesAsync();
+                return CreatedAtAction(nameof(Get), new { id = comentario.Id }, comentario);
             }
-            
             return BadRequest(ModelState);
         }
 
         [HttpPut("{id}")]
-        public IActionResult PutComentarioSerie(int id, [FromBody] ComentarioSerie comentario)
+        public async Task<IActionResult> Put(int id, [FromBody] ComentarioSerie comentario)
         {
             if (id != comentario.Id)
             {
                 return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            _context.Entry(comentario).State = EntityState.Modified;
+
+            try
             {
-                _context.Entry(comentario).State = EntityState.Modified;
-                _context.SaveChanges();
-                return NoContent();
+                await _context.SaveChangesAsync();
             }
-            
-            return BadRequest(ModelState);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_context.ComentariosSeries.Any(e => e.Id == id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteComentarioSerie(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var comentario = _context.ComentariosSerie.Find(id);
+            var comentario = await _context.ComentariosSeries.FindAsync(id);
             if (comentario == null)
             {
                 return NotFound();
             }
 
-            _context.ComentariosSerie.Remove(comentario);
-            _context.SaveChanges();
+            _context.ComentariosSeries.Remove(comentario);
+            await _context.SaveChangesAsync();
+
             return NoContent();
         }
     }
