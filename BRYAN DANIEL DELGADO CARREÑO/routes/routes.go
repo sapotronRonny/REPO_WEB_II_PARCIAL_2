@@ -7,6 +7,10 @@ import (
 
 func SetupRoutes(app *fiber.App) {
 
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Welcome to the API")
+	})
+
 	// Rutas para Serie
 	app.Get("/serie", handlers.GetSeries)
 	app.Get("/serie/:id", handlers.GetSerieID)

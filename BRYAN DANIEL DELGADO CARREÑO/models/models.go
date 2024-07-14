@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-var DB *gorm.DB // Exportamos la variable DB
+var DB *gorm.DB
 
 // Función para inicializar la conexión con la base de datos
 func InitDB(db *gorm.DB) {
