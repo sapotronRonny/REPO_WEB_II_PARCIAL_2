@@ -22,3 +22,4 @@ class GeneroPeliculaViewSet(viewsets.ModelViewSet):
     queryset = GeneroPelicula.objects.all()
     serializer_class = GeneroPeliculaSerializer
 # Path: api/urls.py
+
