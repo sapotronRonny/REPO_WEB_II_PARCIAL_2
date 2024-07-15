@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::graphql('/graphql', 'graphql');
+
+
+Route::view('/graphql-playground', 'graphql-playground');

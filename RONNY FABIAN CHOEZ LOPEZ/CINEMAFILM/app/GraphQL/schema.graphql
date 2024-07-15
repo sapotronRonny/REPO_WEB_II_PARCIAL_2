@@ -1,0 +1,30 @@
+type Query {
+    directors: [Director!]! @all
+    genero_docus: [GeneroDocu!]! @all
+    documentals: [Documental!]! @all
+}
+
+type Director {
+    id_director: ID!
+    nombre: String!
+    created_at: String
+    updated_at: String
+}
+
+type GeneroDocu {
+    id_genero: ID!
+    nombre: String!
+    created_at: String
+    updated_at: String
+}
+
+type Documental {
+    id_documental: ID!
+    titulo: String!
+    duracion: Int
+    resumen: String
+    genero: GeneroDocu @belongsTo(relation: "genero")
+    director: Director @belongsTo(relation: "director")
+    created_at: String
+    updated_at: String
+}

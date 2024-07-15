@@ -123,9 +123,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'aliases' => [
-    // otros alias
-    'GraphQL' => Rebing\GraphQL\Support\Facades\GraphQL::class,
-],
+   
+
 
 ];

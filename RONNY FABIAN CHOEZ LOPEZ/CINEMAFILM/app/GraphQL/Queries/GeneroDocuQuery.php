@@ -2,12 +2,12 @@
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Documental;
+use App\Models\GeneroDocu;
 
-class DocumentalQuery
+class GeneroDocuQuery
 {
     public function resolve($root, array $args)
     {
-        return Documental::all();
+        return GeneroDocu::all();
     }
 }

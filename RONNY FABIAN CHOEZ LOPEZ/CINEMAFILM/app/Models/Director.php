@@ -19,4 +19,9 @@ class Director extends Model
  
      // Indicar que la clave primaria no es de tipo entero
      protected $keyType = 'int';
+
+     public function documentals()
+    {
+        return $this->hasMany(Documental::class, 'director_id');
+    }
 }

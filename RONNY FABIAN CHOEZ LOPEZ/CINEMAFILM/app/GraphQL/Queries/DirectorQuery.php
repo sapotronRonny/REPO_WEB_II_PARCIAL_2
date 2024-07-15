@@ -2,12 +2,12 @@
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Documental;
+use App\Models\Director;
 
-class DocumentalQuery
+class DirectorQuery
 {
     public function resolve($root, array $args)
     {
-        return Documental::all();
+        return Director::all();
     }
 }
